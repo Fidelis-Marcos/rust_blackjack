@@ -26,3 +26,13 @@ impl Carta {
         }
     }
 }
+
+#[derive(Debug)]
+pub struct Baralho {
+    deck: Vec<Carta>,
+    cor: String,
+}
+
+// impl Baralho {
+//     fn new()
+// }
