@@ -33,6 +33,13 @@ pub struct Baralho {
     cor: String,
 }
 
-// impl Baralho {
-//     fn new()
-// }
+impl Baralho {
+    fn new(c: String) -> Baralho{
+        let d:Vec<Carta> = Vec::new();
+        let mut saida= Baralho {deck: d, cor: c};
+        saida.deck.push(Carta::new(NAIPE::Espadas, String::from("As")));
+
+        saida
+
+    }
+}
