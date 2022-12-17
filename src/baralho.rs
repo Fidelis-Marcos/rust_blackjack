@@ -7,7 +7,7 @@ pub enum NAIPE {
     Copas,
     Espada,
     Ouros,
-    Invalido,
+    // Invalido,
 }
  impl fmt::Display for NAIPE {
     fn fmt(&self,f: &mut fmt::Formatter<'_>) ->fmt::Result {
@@ -28,13 +28,13 @@ impl Carta {
         c
     }
 
-    pub fn new_ctrl(n: NAIPE, v: String) -> Carta {
-        if v.len() > 2 {
-            Carta::new(NAIPE::Invalido, String::from("Invalido"))
-        } else {
-            Carta::new(n, v)
-        }
-    }
+    // pub fn new_ctrl(n: NAIPE, v: String) -> Carta {
+    //     if v.len() > 2 {
+    //         Carta::new(NAIPE::Invalido, String::from("Invalido"))
+    //     } else {
+    //         Carta::new(n, v)
+    //     }
+    // }
 }
 
 impl fmt::Display for Carta {
