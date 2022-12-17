@@ -1,4 +1,5 @@
 use core::fmt;
+use rand::prelude::*;
 
 #[derive(Debug, Copy, Clone)]
 pub enum NAIPE {
@@ -90,5 +91,10 @@ impl Baralho {
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("K")));
 
         
+    }
+
+    pub fn embaralhar(&mut self) {
+        let mut rng = rand::thread_rng();
+        self.deck.shuffle(&mut rng);
     }
 }
