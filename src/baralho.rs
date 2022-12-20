@@ -7,16 +7,15 @@ pub enum NAIPE {
     Copas,
     Espada,
     Ouros,
-    // Invalido,
+    Invalido,
 }
- impl fmt::Display for NAIPE {
-    fn fmt(&self,f: &mut fmt::Formatter<'_>) ->fmt::Result {
+impl fmt::Display for NAIPE {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self)
     }
- }
+}
 
-
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct Carta {
     naipe: NAIPE,
     valor: String,
@@ -28,13 +27,21 @@ impl Carta {
         c
     }
 
-    // pub fn new_ctrl(n: NAIPE, v: String) -> Carta {
-    //     if v.len() > 2 {
-    //         Carta::new(NAIPE::Invalido, String::from("Invalido"))
-    //     } else {
-    //         Carta::new(n, v)
-    //     }
-    // }
+    pub fn get_valor(&self) -> &str {
+        self.valor.as_str()
+    }
+
+    pub fn parsed_valor(&self) -> u32 {
+        self.valor.parse::<u32>().unwrap()
+    }
+
+    pub fn new_ctrl(n: NAIPE, v: String) -> Carta {
+        if v.len() > 2 {
+            Carta::new(NAIPE::Invalido, String::from("Invalido"))
+        } else {
+            Carta::new(n, v)
+        }
+    }
 }
 
 impl fmt::Display for Carta {
@@ -50,8 +57,8 @@ pub struct Baralho {
 }
 
 impl Baralho {
-    pub fn new(c: String) -> Baralho{
-        let s = Baralho{
+    pub fn new(c: String) -> Baralho {
+        let s = Baralho {
             deck: Vec::new(),
             cor: c,
         };
@@ -59,7 +66,7 @@ impl Baralho {
     }
     pub fn gerar(&mut self) {
         self.deck.push(Carta::new(NAIPE::Paus, String::from("As")));
-        for i in 2..10 {
+        for i in 2..11 {
             self.deck.push(Carta::new(NAIPE::Paus, i.to_string()));
         }
         self.deck.push(Carta::new(NAIPE::Paus, String::from("J")));
@@ -67,15 +74,16 @@ impl Baralho {
         self.deck.push(Carta::new(NAIPE::Paus, String::from("K")));
 
         self.deck.push(Carta::new(NAIPE::Copas, String::from("As")));
-        for i in 2..10 {
+        for i in 2..11 {
             self.deck.push(Carta::new(NAIPE::Copas, i.to_string()));
         }
         self.deck.push(Carta::new(NAIPE::Copas, String::from("J")));
         self.deck.push(Carta::new(NAIPE::Copas, String::from("Q")));
         self.deck.push(Carta::new(NAIPE::Copas, String::from("K")));
 
-        self.deck.push(Carta::new(NAIPE::Espada, String::from("As")));
-        for i in 2..10 {
+        self.deck
+            .push(Carta::new(NAIPE::Espada, String::from("As")));
+        for i in 2..11 {
             self.deck.push(Carta::new(NAIPE::Espada, i.to_string()));
         }
         self.deck.push(Carta::new(NAIPE::Espada, String::from("J")));
@@ -83,14 +91,12 @@ impl Baralho {
         self.deck.push(Carta::new(NAIPE::Espada, String::from("K")));
 
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("As")));
-        for i in 2..10 {
+        for i in 2..11 {
             self.deck.push(Carta::new(NAIPE::Ouros, i.to_string()));
         }
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("J")));
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("Q")));
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("K")));
-
-        
     }
 
     pub fn embaralhar(&mut self) {
