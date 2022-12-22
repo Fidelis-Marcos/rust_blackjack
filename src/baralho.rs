@@ -1,4 +1,5 @@
 use core::fmt;
+use std::hash::BuildHasherDefault;
 use rand::prelude::*;
 
 #[derive(Debug, Copy, Clone)]
@@ -53,15 +54,16 @@ impl fmt::Display for Carta {
 #[derive(Debug)]
 pub struct Baralho {
     pub deck: Vec<Carta>,
-    pub cor: String,
+    pub numero: u32,
 }
 
 impl Baralho {
-    pub fn new(c: String) -> Baralho {
+    pub fn new(n: u32) -> Baralho {
         let s = Baralho {
             deck: Vec::new(),
-            cor: c,
+            numero: n,
         };
+        // s.gerar();
         s
     }
     pub fn gerar(&mut self) {
@@ -97,6 +99,19 @@ impl Baralho {
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("J")));
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("Q")));
         self.deck.push(Carta::new(NAIPE::Ouros, String::from("K")));
+    }
+
+    // fn adicionar_baralho(&mut self,n:u32) {
+        // let bara_adic = Baralho::new(n);
+        // bara_adic.gerar();
+    // }
+
+    pub fn baralhos_totais(&mut self, n: u32) {
+        for i in 0..n {
+            let mut burner = Baralho::new(i);
+            burner.gerar();
+            self.deck.append(&mut burner.deck);
+        }
     }
 
     pub fn embaralhar(&mut self) {

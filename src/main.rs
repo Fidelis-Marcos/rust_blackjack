@@ -25,27 +25,42 @@ fn contagem(h: Vec<Carta>) -> u32 {
     s
 }
 
+
 fn main() {
-    let mut b: Baralho = Baralho::new(String::from("preto"));
+    let mut b: Baralho = Baralho::new(0);
     let mut hand: Vec<Carta> = Vec::new();
-    hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("As")));
-    hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("As")));
-    hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("As")));
-    b.gerar();
-    println!("{}", b.deck.len());
+    hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("3")));
+    // hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("Q")));
+    // hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("K")));
+    let mut input = String::new();
+    println!("How Many Decks Would you Like?: ");
+    let _burner = io::stdin().read_line(&mut input);
+    b.baralhos_totais(input.trim().parse::<u32>().unwrap());
+    println!("Teste do baralho: {}", b.deck.len());
     b.embaralhar();
     println!("{:?}", b.deck.pop().unwrap());
-    let mut input = String::new();
     loop {
         println!("The Game Begins");
+        println!("Would you like to (H)it, (S)tand");
+        input.clear();
+        let _burner = io::stdin().read_line(&mut input);
+        if input.contains("h") {
+            let temp = b.deck.pop().unwrap();
+            println!("carta pra mao: {:?}",temp);
+            hand.push(temp);
+        } else if input.contains("s") {
+            break;
+        }
 
         // Avaliação das cartas
-        let teste = contagem(hand);
+        let teste = contagem(hand.clone());
         println!("{}", teste);
+        if teste > 21 {
+            println!("You went Bust. House Wins");
+            break;
+        }
 
         // Vitoria/Derrota
 
-        let _burner = io::stdin().read_line(&mut input);
-        break;
     }
 }
