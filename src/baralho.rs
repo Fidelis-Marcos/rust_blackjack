@@ -1,4 +1,4 @@
-use core::fmt;
+use core::fmt::{Display, Formatter};
 use rand::prelude::*;
 
 #[derive(Debug, Copy, Clone)]
@@ -9,8 +9,8 @@ pub enum NAIPE {
     Ouros,
     Invalido,
 }
-impl fmt::Display for NAIPE {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl Display for NAIPE {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         write!(f, "{}", self)
     }
 }
@@ -44,8 +44,8 @@ impl Carta {
     }
 }
 
-impl fmt::Display for Carta {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+impl Display for Carta {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         write!(f, "({} {})", self.naipe, self.valor)
     }
 }
