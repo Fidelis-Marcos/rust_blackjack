@@ -101,8 +101,8 @@ impl Baralho {
     }
 
     // fn adicionar_baralho(&mut self,n:u32) {
-        // let bara_adic = Baralho::new(n);
-        // bara_adic.gerar();
+    // let bara_adic = Baralho::new(n);
+    // bara_adic.gerar();
     // }
 
     pub fn baralhos_totais(&mut self, n: u32) {

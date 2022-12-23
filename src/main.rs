@@ -25,7 +25,6 @@ fn contagem(h: Vec<Carta>) -> u32 {
     s
 }
 
-
 fn main() {
     let mut b: Baralho = Baralho::new(0);
     let mut hand: Vec<Carta> = Vec::new();
@@ -39,6 +38,10 @@ fn main() {
     println!("Teste do baralho: {}", b.deck.len());
     b.embaralhar();
     println!("{:?}", b.deck.pop().unwrap());
+    println!("{:?}", b.deck.pop().unwrap());
+    println!("{:?}", b.deck.pop().unwrap());
+    println!("{:?}", b.deck.pop().unwrap());
+    println!("{:?}", b.deck.pop().unwrap());
     loop {
         println!("The Game Begins");
         println!("Would you like to (H)it, (S)tand");
@@ -46,12 +49,11 @@ fn main() {
         let _burner = io::stdin().read_line(&mut input);
         if input.contains("h") {
             let temp = b.deck.pop().unwrap();
-            println!("carta pra mao: {:?}",temp);
+            println!("carta pra mao: {:?}", temp);
             hand.push(temp);
         } else if input.contains("s") {
             break;
         }
-
         // Avaliação das cartas
         let teste = contagem(hand.clone());
         println!("{}", teste);
@@ -62,18 +64,21 @@ fn main() {
         // Vitoria/Derrota
     }
 
-    // botar a mesa pra puxar cartas
     let mut table: Vec<Carta> = Vec::new();
     loop {
         table.push(b.deck.pop().unwrap());
         if contagem(table.clone()) > 21 {
-            println!("House Loses");
+            println!("House Bust");
             break;
-        } else if contagem(hand.clone()) < contagem(table.clone()) {
-            println!("House Loses");
-            break;
-        } else if contagem(hand.clone()) < contagem(table.clone()) && contagem(table.clone()) <= 21 {
+        // } else if contagem(hand.clone()) > contagem(table.clone()) && contagem(table.clone()) < 21 {
+        //     println!("House Loses");
+        //     break;
+        } else if contagem(hand.clone()) < contagem(table.clone()) && contagem(table.clone()) <= 21
+        {
             println!("House Wins");
+            break;
         }
     }
+
+    // botar a mesa pra puxar cartas
 }
