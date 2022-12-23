@@ -25,6 +25,12 @@ fn main() {
         loop {
             println!("Would you like to (H)it, (S)tand");
             input.clear();
+            let _burner = io::stdin().read_line(&mut input);
+            if input.contains("h") {
+                game::hit(&mut hand, &mut b);
+            } else if input.contains("s") {
+                break;
+            }
 
             // Avaliação das cartas
             let teste = game::contagem(hand.clone());

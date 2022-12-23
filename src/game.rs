@@ -43,8 +43,6 @@ pub fn mesa(valor_mao: u32, b: &mut Baralho) {
 }
 
 pub fn hit(hand: &mut Vec<Carta>, b: &mut Baralho) {
-    let mut input = String::new();
-    let _burner = io::stdin().read_line(&mut input);
     let temp = b.deck.pop().unwrap();
     println!("carta pra mao: {:?}", temp);
     hand.push(temp);
