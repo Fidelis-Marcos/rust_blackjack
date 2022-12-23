@@ -29,7 +29,7 @@ fn contagem(h: Vec<Carta>) -> u32 {
 fn main() {
     let mut b: Baralho = Baralho::new(0);
     let mut hand: Vec<Carta> = Vec::new();
-    hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("3")));
+    // hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("3")));
     // hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("Q")));
     // hand.push(Carta::new_ctrl(NAIPE::Espada, String::from("K")));
     let mut input = String::new();
@@ -59,8 +59,21 @@ fn main() {
             println!("You went Bust. House Wins");
             break;
         }
-
         // Vitoria/Derrota
+    }
 
+    // botar a mesa pra puxar cartas
+    let mut table: Vec<Carta> = Vec::new();
+    loop {
+        table.push(b.deck.pop().unwrap());
+        if contagem(table.clone()) > 21 {
+            println!("House Loses");
+            break;
+        } else if contagem(hand.clone()) < contagem(table.clone()) {
+            println!("House Loses");
+            break;
+        } else if contagem(hand.clone()) < contagem(table.clone()) && contagem(table.clone()) <= 21 {
+            println!("House Wins");
+        }
     }
 }

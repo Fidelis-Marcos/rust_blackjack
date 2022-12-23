@@ -1,5 +1,4 @@
 use core::fmt;
-use std::hash::BuildHasherDefault;
 use rand::prelude::*;
 
 #[derive(Debug, Copy, Clone)]
