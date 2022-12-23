@@ -38,7 +38,7 @@ fn main() {
         }
 
         if !bust {
-            mesa(contagem(hand.clone()), &mut b);
+            game::mesa(game::contagem(hand.clone()), &mut b);
         }
         println!("Would You like to Play again?");
         input.clear();
