@@ -13,6 +13,7 @@ fn main() {
     b.baralhos_totais(input.trim().parse::<u32>().unwrap());
     println!("Teste do baralho: {}", b.deck.len());
     b.embaralhar();
+    println!("{}", b.deck.pop().unwrap());
     loop {
         println!("The Game Begins");
         let temp = b.deck.pop().unwrap();

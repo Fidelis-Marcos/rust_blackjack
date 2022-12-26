@@ -1,6 +1,15 @@
 // mod baralho;
 use crate::baralho::*;
-use std::io;
+// use std::io;
+// use thiserror::Error;
+
+// #[derive(Debug, Error)]
+// #[non_exhaustive]
+// pub enum GameError {
+//     #[error("Not one of the four suits")]
+//     InvalidSuit,
+// }
+
 pub fn contagem(h: Vec<Carta>) -> u32 {
     let mut s: u32 = 0;
     let mut wait: u32 = 0;

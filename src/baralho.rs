@@ -1,5 +1,7 @@
 use core::fmt::{Display, Formatter};
 use rand::prelude::*;
+use thiserror::Error;
+
 
 #[derive(Debug, Copy, Clone)]
 pub enum NAIPE {
@@ -7,18 +9,30 @@ pub enum NAIPE {
     Copas,
     Espada,
     Ouros,
-    Invalido,
 }
 impl Display for NAIPE {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
-        write!(f, "{}", self)
+        use NAIPE::*;
+        match self {
+            Paus => write!(f, "Paus"),
+            Copas => write!(f, "Copas"),
+            Espada => write!(f, "Espada"),
+            Ouros => write!(f, "Ouros"),
+        }
     }
+}
+
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum CartaError {
+    #[error("Suit not one of 4 suits")]
+    InvalidSuit,
 }
 
 #[derive(Debug, Clone)]
 pub struct Carta {
-    naipe: NAIPE,
-    valor: String,
+    pub naipe: NAIPE,
+    pub valor: String,
 }
 
 impl Carta {
@@ -35,18 +49,18 @@ impl Carta {
         self.valor.parse::<u32>().unwrap()
     }
 
-    pub fn new_ctrl(n: NAIPE, v: String) -> Carta {
-        if v.len() > 2 {
-            Carta::new(NAIPE::Invalido, String::from("Invalido"))
-        } else {
-            Carta::new(n, v)
-        }
+    pub fn new_ctrl(n: NAIPE, v: String) -> Result<Carta, CartaError> {
+            let saida = match n {
+                NAIPE => Ok(Carta::new(n, v)),
+                _=> Err(CartaError::InvalidSuit),
+            };
+            saida
     }
 }
 
 impl Display for Carta {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
-        write!(f, "({} {})", self.naipe, self.valor)
+        write!(f, "{} de {}", self.valor, self.naipe)
     }
 }
 
