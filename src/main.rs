@@ -1,40 +1,40 @@
 mod baralho;
 use crate::baralho::*;
-mod game;
+mod blackjack;
+use crate::blackjack::*;
 use std::io;
 
 fn main() {
-    let mut b: Baralho = Baralho::new(0);
-    let mut hand: Vec<Carta> = Vec::new();
+    let mut game = Blackjack::start();
     let mut input = String::new();
     let mut bust: bool = false;
     println!("How Many Decks Would you Like?: ");
     let _burner = io::stdin().read_line(&mut input);
-    b.baralhos_totais(input.trim().parse::<u32>().unwrap());
-    println!("Teste do baralho: {}", b.deck.len());
-    b.embaralhar();
-    println!("{}", b.deck.pop().unwrap());
+    game.dealer
+        .baralhos_totais(input.trim().parse::<u32>().unwrap());
+    game.dealer.embaralhar();
+    println!("{}", game.dealer.deck.pop().unwrap());
     loop {
         println!("The Game Begins");
-        let temp = b.deck.pop().unwrap();
-        println!("carta pra mao: {:?}", temp);
-        hand.push(temp);
+        let temp = game.dealer.deck.pop().unwrap();
+        println!("carta pra mao: {}", temp);
+        game.jgdr.push(temp);
 
-        let temp = b.deck.pop().unwrap();
-        println!("carta pra mao: {:?}", temp);
-        hand.push(temp);
+        let temp = game.dealer.deck.pop().unwrap();
+        println!("carta pra mao: {}", temp);
+        game.jgdr.push(temp);
         loop {
             println!("Would you like to (H)it, (S)tand");
             input.clear();
             let _burner = io::stdin().read_line(&mut input);
             if input.contains("h") {
-                game::hit(&mut hand, &mut b);
+                game.hit();
             } else if input.contains("s") {
                 break;
             }
 
             // Avaliação das cartas
-            let teste = game::contagem(hand.clone());
+            let teste = Blackjack::contagem(hand.clone());
             println!("{}", teste);
             if teste > 21 {
                 println!("You went Bust. House Wins");
@@ -45,7 +45,7 @@ fn main() {
         }
 
         if !bust {
-            game::mesa(game::contagem(hand.clone()), &mut b);
+            Blackjack::mesa(Blackjack::contagem(hand.clone()), &mut b);
         }
         println!("Would You like to Play again?");
         input.clear();

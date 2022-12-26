@@ -57,14 +57,14 @@ pub struct Baralho {
 
 impl Baralho {
     pub fn new(n: u32) -> Baralho {
-        let s = Baralho {
+        let mut s = Baralho {
             deck: Vec::new(),
             numero: n,
         };
-        // s.gerar();
+        s.gerar();
         s
     }
-    pub fn gerar(&mut self) {
+    fn gerar(&mut self) {
         for n in NAIPE::iter() {
             self.deck.push(Carta::new(n, String::from("As")));
             for i in 2..11 {
@@ -77,10 +77,11 @@ impl Baralho {
     }
 
     pub fn baralhos_totais(&mut self, n: u32) {
-        for i in 0..n {
-            let mut burner = Baralho::new(i);
-            burner.gerar();
-            self.deck.append(&mut burner.deck);
+        if n > 0 {
+            for i in 0..n - 1 {
+                let mut burner = Baralho::new(i);
+                self.deck.append(&mut burner.deck);
+            }
         }
     }
 
@@ -97,7 +98,20 @@ mod test {
     #[test]
     fn tamanho_certo() {
         let mut b = Baralho::new(0);
-        b.gerar();
         assert_eq!(52, b.deck.len());
+    }
+
+    #[test]
+    fn total_simples() {
+        let mut b = Baralho::new(0);
+        b.baralhos_totais(0);
+        assert_eq!(52, b.deck.len());
+    }
+
+    #[test]
+    fn total_certo() {
+        let mut b = Baralho::new(0);
+        b.baralhos_totais(3);
+        assert_eq!(156, b.deck.len());
     }
 }
