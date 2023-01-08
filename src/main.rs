@@ -1,5 +1,4 @@
 mod baralho;
-use crate::baralho::*;
 mod blackjack;
 use crate::blackjack::*;
 use std::io;
@@ -34,7 +33,7 @@ fn main() {
             }
 
             // Avaliação das cartas
-            let teste = Blackjack::contagem(hand.clone());
+            let teste = game.cont_jgdr();
             println!("{}", teste);
             if teste > 21 {
                 println!("You went Bust. House Wins");
@@ -45,14 +44,19 @@ fn main() {
         }
 
         if !bust {
-            Blackjack::mesa(Blackjack::contagem(hand.clone()), &mut b);
+            let resultado = game.cont_mesa();
+            if resultado {
+                println!("House Wins");
+            } else {
+                println!("You win");
+            }
         }
         println!("Would You like to Play again?");
         input.clear();
         let _burner = io::stdin().read_line(&mut input);
         if input.contains("y") {
-            hand.clear();
-            // table.clear();
+            game.jgdr.clear();
+            game.mesa.clear();
             bust = false;
         } else {
             break;

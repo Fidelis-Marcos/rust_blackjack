@@ -1,15 +1,4 @@
-// mod baralho;
 use crate::baralho::*;
-use thiserror::Error;
-// use std::io;
-// use thiserror::Error;
-
-// #[derive(Debug, Error)]
-// #[non_exhaustive]
-// pub enum GameError {
-//     #[error("Not one of the four suits")]
-//     InvalidSuit,
-// }
 
 pub struct Blackjack {
     pub dealer: Baralho,
@@ -29,7 +18,7 @@ impl Blackjack {
             mesa: m,
         }
     }
-    pub fn contagem(h: Vec<Carta>) -> u32 {
+    fn contagem(h: Vec<Carta>) -> u32 {
         let mut s: u32 = 0;
         let mut wait: u32 = 0;
         for c in h {
@@ -52,24 +41,27 @@ impl Blackjack {
         s
     }
 
-    pub fn mesa(valor_mao: u32, b: &mut Baralho) {
-        let mut table: Vec<Carta> = Vec::new();
+    pub fn cont_jgdr(&self) -> u32 {
+        let s = Blackjack::contagem(self.jgdr.clone());
+        s
+    }
+
+    pub fn cont_mesa(&mut self) -> bool {
+        let valor_mao = Blackjack::cont_jgdr(&self);
         loop {
-            let valor_mesa = Blackjack::contagem(table.clone());
-            table.push(b.deck.pop().unwrap());
+            let valor_mesa = Blackjack::contagem(self.mesa.clone());
+            self.mesa.push(self.dealer.deck.pop().unwrap());
             if valor_mesa > 21 {
-                println!("{} House Bust", valor_mesa);
-                break;
+                return false;
             } else if valor_mao < valor_mesa && valor_mesa <= 21 {
-                println!("{} House Wins", valor_mesa);
-                break;
+                return true;
             }
         }
     }
 
-    pub fn hit(&self) {
+    pub fn hit(&mut self) {
         let temp = self.dealer.deck.pop().unwrap();
-        println!("carta pra mao: {:?}", temp);
+        println!("Sua carta é um {}", temp);
         self.jgdr.push(temp);
     }
 }

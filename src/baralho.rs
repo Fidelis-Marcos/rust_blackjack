@@ -97,7 +97,7 @@ mod test {
 
     #[test]
     fn tamanho_certo() {
-        let mut b = Baralho::new(0);
+        let b = Baralho::new(0);
         assert_eq!(52, b.deck.len());
     }
 
